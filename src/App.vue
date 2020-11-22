@@ -16,21 +16,21 @@ export default {
   components: {
     Setting,
     List,
-    Menu
+    Menu,
   },
-  data(){
+  data() {
     return {
-      route: 'list'
-    }
+      route: 'list',
+    };
   },
-  computed:{
-    isSetting(){
+  computed: {
+    isSetting() {
       return this.route === 'settings';
     },
-    isList(){
+    isList() {
       return this.route === 'list';
-    }
-  }
+    },
+  },
 };
 </script>
 

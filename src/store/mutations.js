@@ -1,25 +1,30 @@
+import { finder } from '../utils';
+import { Mutation, MIL_SEG } from '../config/types.json';
+
 export default {
-  removeItem (state, key) {
-    const index = state.items.findIndex(item => key === item.key);
-    if(index >= 0 ) {
+  [Mutation.REMOVE_ITEM]: (state, id) => {
+    const index = state.items.findIndex(finder(id));
+    if (index >= 0) {
       state.items.splice(index, 1);
     }
   },
-  updateItem (state, item = {}) {
-    const index = state.items.findIndex(({ key }) => key === item.key);
-    if(index >= 0 ) {
+  [Mutation.UPDATE_ITEM]: (state, item = {}) => {
+    const index = state.items.findIndex(finder(item.id));
+    if (index >= 0) {
       state.items.splice(index, 1, item);
     } else {
       state.items.unshift(item);
     }
   },
-  nextRun(state){
-    state.lastRun = new Date();
+  [Mutation.NEXT_RUN]: (state) => {
+    /*eslint-disable */
+    state.lastRun = Date.now() - (state.settings.nextDate * MIL_SEG);
   },
-  updateSettings(state, settings= {}){
+  [Mutation.UPDATE_SETTING]: (state, settings = {}) => {
+    /*eslint-disable */
     state.settings = {
       ...state.settings,
-      ...settings
+      ...settings,
     };
-  }
+  },
 };

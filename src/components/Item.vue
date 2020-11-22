@@ -4,7 +4,7 @@
       :src="image"
       @click="$emit('open', url)"
     />
-    <section 
+    <section
       @click="$emit('open', url)"
     >
       <div>
@@ -20,82 +20,84 @@
     </section>
 
     <nav v-if="!load">
-      <div 
+      <div
         class="trash"
-        @click="$emit('remove', key)">
-        <i name="trash" />  
+        @click="$emit('remove', id)">
+        <i name="trash" />
       </div>
-       <div 
+       <div
         class="trash"
-        @click="$emit('update', key)">
-        <i name="trash" />  
+        @click="$emit('update', id)">
+        <i name="trash" />
       </div>
     </nav>
 
     <div v-if="load">
-      <i name="trash" />  
+      <i name="trash" />
     </div>
   </li>
 </template>
 
 <script>
+import { lastTime, listTime } from '../utils';
+
 export default {
-  name: "Item",
+  name: 'Item',
   props: {
-    error : Boolean,
-    load : Boolean,
-    key: {
+    error: Boolean,
+    load: Boolean,
+    id: {
       type: String,
-      default: ""
+      default: '',
     },
     image: {
       type: String,
-      default: ""
+      default: '',
     },
     url: {
       type: String,
-      default: ""
+      default: '',
     },
     title: {
       type: String,
-      default: ""
+      default: '',
     },
     description: {
       type: String,
-      default: ""
+      default: '',
     },
     symbol: {
       type: String,
-      default: "$"
+      default: '$',
     },
     prices: {
       type: Object,
-      default: () => ({})
+      default: () => ({}),
     },
   },
-  computed:{
-    numberTendences(){
-      return this.prices[ this.times[ 0 ] ] / this.priceNumber;
+  computed: {
+    numberTendences() {
+      return this.prices[this.times[0]] / this.priceNumber;
     },
-    price(){
-      return this.symbol + ' ' + this.priceNumber;
+    price() {
+      return `${this.symbol} ${this.priceNumber}`;
     },
-    classTendences(){
+    classTendences() {
       return {
-        green : this.numberTendences < 1,
-        red : this.numberTendences > 1,
-        grey : this.numberTendences === 1,
+        green: this.numberTendences < 1,
+        red: this.numberTendences > 1,
+        grey: this.numberTendences === 1,
       };
     },
-    priceNumber(){
-      return this.prices[ this.lastTime ] || 0;
+    priceNumber() {
+      return this.prices[this.lastTime] || 0;
     },
-    times(){
-      return Object.keys(this.prices);
+    times() {
+      return listTime(this.prices);
     },
-    lastTime(){
-      return this.times[ this.times.length - 1 ];
+    lastTime() {
+      return lastTime({ prices: this.prices });
     },
-  }
+  },
 };
 </script>

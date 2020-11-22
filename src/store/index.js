@@ -1,15 +1,22 @@
+import Vue from 'vue';
 import Vuex from 'vuex';
 import VuexPersistence from 'vuex-persist';
+
+import state from '../config/state.json';
 import storage from './storage';
-import state from "./state.json";
-import mutations from "./mutations";
+import mutations from './mutations';
+import actions from './actions';
+
+Vue.use(Vuex);
 
 export const local = new VuexPersistence({
-  storage
+  storage,
+  asyncStorage: true,
 });
 
 export default new Vuex.Store({
   state,
   mutations,
-  plugins: [local.plugin]
+  actions,
+  plugins: [local.plugin],
 });

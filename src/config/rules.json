@@ -1,0 +1,11 @@
+{
+	"*.linio.com.co/p/*": {
+		"image": {
+			".image": ["url"]
+		},
+		"title": {
+			"title": ["innerText", []],
+			".title": ["innerText", []]
+		}
+	}
+}

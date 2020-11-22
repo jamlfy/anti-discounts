@@ -1,0 +1,18 @@
+{
+	"MIL_SEG": 1000,
+	"Mutation": {
+		"REMOVE_ITEM": "removeItem",
+		"UPDATE_ITEM": "updateItem",
+		"NEXT_RUN": "nextRun",
+		"UPDATE_SETTING": "updateSettings"
+	},
+	"Action": {
+		"RUNNER": "runner",
+		"UPDATE_ITEM": "updateItem",
+		"UPDATE_BY_ID": "updateById",
+		"GET_DATA": "getData",
+		"REMOVE_ITEM": "removeItem",
+		"ADD_ITEM": "addItem",
+		"OPEN_TAB": "openTab"
+	}
+}

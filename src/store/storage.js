@@ -1,29 +1,35 @@
-export const StorageArea = "sync";
+export const StorageArea = 'sync';
 
 export default {
   _config: {
-    name: "storage"
+    name: 'storage',
   },
-  getItem(key){
+  getItem(key) {
+    /*eslint-disable */
     return browser.storage[StorageArea].get(key);
   },
-  setItem(key, data){
+  setItem(key, data) {
+    /*eslint-disable */
     return browser.storage[StorageArea].get({
-      [key]: data
+      [key]: data,
     });
   },
-  removeItem(key){
+  removeItem(key) {
+    /*eslint-disable */
     return browser.storage[StorageArea].remove(key);
   },
-  clear(){
+  clear() {
+    /*eslint-disable */
     return browser.storage[StorageArea].clear();
   },
-  length(){
+  length() {
+    /*eslint-disable */
     return browser.storage[StorageArea].get()
-      .then(obj => Object.keys(obj).length);
+      .then((obj) => Object.keys(obj).length);
   },
   key(keyIndex) {
+    /*eslint-disable */
     return browser.storage[StorageArea].get()
-      .then(obj => obj[Object.keys(obj)[keyIndex]]);
-  }
+      .then((obj) => obj[Object.keys(obj)[keyIndex]]);
+  },
 };

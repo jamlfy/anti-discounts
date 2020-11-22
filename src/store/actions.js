@@ -1,73 +1,104 @@
+import {
+  listDomains, sort, filter, lastTime, finder, load,
+} from '../utils';
+import { Mutation, Action } from '../config/types.json';
+import RULES from '../config/rules.json';
+
 export default {
-  removeItem({ commit }, key){
-    commit("removeItem", key);
-  },
-  addItem({ dispatch }, url){
-    dispatch('updateItem', {
-      key: convert(url),
-      url,
-    });
-  },
-  updateToRequest ({ dispatch, store, commit }){
-    const itemToUpdate = store.state.items
-      .filter(({ prices = {} }) => {
-        const times = Object.keys(prices);
-        return !store.state.lastRun || !times.length || store.state.lastRun > times[ times.length - 1 ];
-      })
-      .map(data => dispatch('updateItem', data));
+  [Action.RUNNER]: ({ dispatch, commit, state }) => {
+    setTimeout(async () => {
+      const [data] = state.items
+        .filter(filter(state))
+        .sort(sort);
 
-    return Promise
-      .all(itemToUpdate)
-      .then(() => commit("nextRun"));
-  },
-  updateById({ dispatch, store }, id){
-    let item = store.items.find(({ key }) => id === key);
-    if(item){
-      return dispatch("updateItem", item);
-    }
+      if (data) {
+        await dispatch(Action.UPDATE_ITEM, data);
+      }
 
-    return Promise.resolve("No exist");
+      commit(Mutation.NEXT_RUN);
+      dispatch(Action.RUNNER);
+    }, state.settings.nextDate);
   },
-  async updateItem({ commit, dispatch }, { prices={}, url, ...item }){
+  [Action.UPDATE_ITEM]: async ({ commit, dispatch }, { prices = {}, url, ...item }) => {
     let newItem = {
       ...item,
       prices,
       url,
-      error : false,
-      load : true,
+      error: false,
+      load: true,
     };
-    
+
     try {
-      commit("updateItem", newItem);
+      commit(Mutation.UPDATE_ITEM, newItem);
 
-      const { now, price, ...data } = await dispatch('getData', url);
-      const times = Object.keys(prices);
-      const lastPrice = prices[ times[ times.length -1 ] ];
+      const { now, price, ...data } = await dispatch(Action.GET_DATA, url);
+      const lastThatTime = lastTime({ prices });
 
-      if ( lastPrice !== price ){
-        newItem.prices[now] = price;
+      newItem.prices[now] = price;
+
+      if (lastThatTime && newItem.prices[lastThatTime] && newItem.prices[lastThatTime] === price) {
+        delete newItem.prices[lastThatTime];
       }
 
-      newItem = { 
-        ...newItem, 
+      newItem = {
+        ...newItem,
         ...data,
         load: false,
         error: false,
       };
-
-    } catch(e){
+    } catch (e) {
       newItem.load = false;
       newItem.error = true;
     } finally {
-      commit("updateItem", newItem);
+      commit(Mutation.NEXT_RUN, newItem);
     }
 
     return newItem.error;
   },
-  getData(context, url){
+  [Action.UPDATE_BY_ID]: ({ dispatch, store }, key) => {
+    const item = store.items.find(finder(key));
+    if (item) {
+      return dispatch(Action.UPDATE_BY_ID, item);
+    }
 
+    return Promise.resolve('No exist');
   },
-  openTab(context, url){
-    
-  }
+  [Action.GET_DATA]: async (context, url) => {
+    const pathRule = listDomains.find((rule) => rule.exec(url));
+
+    if (!pathRule) {
+      throw new Error('No exist the rule');
+    }
+
+    const rules = RULES[pathRule];
+    const element = await load(url, btoa(url));
+
+    return Object.keys(rules)
+      .reduce((obj, key) => ({
+        ...obj,
+        [key]: Object.keys(rules[key]).reduce((str, query) => {
+          const node = element.querySelector(query);
+          if (!str && node) {
+            return rules[key][query]
+              .reduce((strx, replacer) => strx.replace(...replacer), node.innerText);
+          }
+
+          return str;
+        }, ''),
+      }), {});
+  },
+  [Action.REMOVE_ITEM]: ({ commit }, key) => {
+    commit(Mutation.REMOVE_ITEM, key);
+  },
+  [Action.ADD_ITEM]: ({ dispatch }, url) => {
+    const urlObj = new URL(url);
+    urlObj.search = '';
+    dispatch('updateItem', {
+      url: urlObj.toString(),
+      id: btoa(urlObj.toString()),
+    });
+  },
+  [Action.OPEN_TAB]: (context, url) => {
+    console.log('context', context, url);
+  },
 };

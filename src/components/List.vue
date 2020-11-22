@@ -1,40 +1,34 @@
 <template>
-	<ul>
-		<Item 
-			v-for="item in items"
-			:key="item.key"
-			:bind="item" 
-			@open="openTab"
-			@remove="removeItem"
-			@update="updateById"
-		/>
-		<Add @is="addItem" />
-	</ul>
+  <ul v-if="items && items.length">
+    <Item
+      v-for="(item, index) in items"
+      :key="index"
+      :bind="item"
+      @open="open"
+      @remove="remove"
+      @update="update"
+    />
+  </ul>
 </template>
 
 <script>
-import { mapActions } from 'vuex';
-import Item from "./Item.vue";
-import Add from "./Add.vue";
+import { mapActions, mapState } from 'vuex';
+import { Action } from '../config/types.json';
+
+import Item from './Item.vue';
 
 export default {
-	name: "List",
-	components: {
-		Item,
-		Add
-	},
-	watch: {
-		items(){
-			return this.$store.store.items;
-		},
-	},
-	methods:{
-		...mapActions([
-			"updateById",
-			"removeItem",
-			"addItem",
-			"openTab"
-		])
-	}
+  name: 'List',
+  components: {
+    Item,
+  },
+  computed: mapState({
+    items: (state) => state.items,
+  }),
+  methods: mapActions({
+    update: Action.UPDATE_BY_ID,
+    remove: Action.REMOVE_ITEM,
+    open: Action.OPEN_TAB,
+  }),
 };
 </script>
