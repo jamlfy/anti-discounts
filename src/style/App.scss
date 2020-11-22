@@ -1,0 +1,16 @@
+.menu, .content {
+  display: flex;
+  width: 100%;
+}
+
+.content {
+  height: calc(100vh - 25px );
+  flex-direction: column;
+  overflow: auto;
+}
+
+#app {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}

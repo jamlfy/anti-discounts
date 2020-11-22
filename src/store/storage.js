@@ -1,4 +1,4 @@
-export const StorageArea = 'sync';
+import { StorageArea } from '../config/types.json';
 
 export default {
   _config: {

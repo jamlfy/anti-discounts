@@ -3,7 +3,7 @@
     <Item
       v-for="(item, index) in items"
       :key="index"
-      :bind="item"
+      v-bind="item"
       @open="open"
       @remove="remove"
       @update="update"

@@ -1,0 +1,12 @@
+nav {
+  display: flex;
+}
+nav .big {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+}
+
+nav button > span {
+  display: none;
+}

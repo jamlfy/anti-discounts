@@ -1,19 +1,23 @@
 <template>
   <button
-    @click="$emit('is', url)"
+    @click="click"
     :disabled="!isActive">
-    agregar
-    <i name="plus" />
+    <span v-text="'agregar'" />
+    <FontIcon :icon="icon" />
   </button>
 </template>
 
 <script>
-import { listDomains } from '../utils';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { mapState } from 'vuex';
+import { findByDomain } from '../utils';
 
 export default {
   name: 'Add',
   data() {
-    return { url: 'https://www.linio.com.co/p/celular-xiaomi-redmi-note-8-64gb-4-ram-azul-n5aio8' };
+    return {
+      url: 'https://www.linio.com.co/p/samsung-galaxy-a01-core-16gb-rojo-oq6vec',
+    };
   },
   mounted() {
     // browser.tabs.query({active: true, currentWindow: true})
@@ -22,7 +26,20 @@ export default {
   computed: {
     isActive() {
       return !!this.url
-        && listDomains.some((run) => run.exec(this.url));
+        && findByDomain(this.url)
+        && this.items.every(({ url }) => url !== this.url);
+    },
+    icon() {
+      return faPlus;
+    },
+    ...mapState({
+      items: (state) => state.items,
+    }),
+  },
+  methods: {
+    click() {
+      this.num += 1;
+      this.$emit('is', this.url);
     },
   },
 };

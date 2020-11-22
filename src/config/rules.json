@@ -1,11 +1,17 @@
 {
 	"*.linio.com.co/p/*": {
 		"image": {
-			".image": ["url"]
+			"[itemprop=image]": [
+				["getAttribute", "content"],
+				["//", "https://"]
+			]
 		},
 		"title": {
-			"title": ["innerText", []],
-			".title": ["innerText", []]
+			"[itemprop=name]": ["innerText"],
+			".product-name": ["innerText"]
+		},
+		"price": {
+			".lowest-price > .price-main-md": ["innerText", ["\\$", ""], ["\\.", ""]]
 		}
 	}
 }

@@ -1,19 +1,24 @@
 <template>
   <nav>
-    <Add @is="add" />
+    <Add
+      class="big"
+      @is="add"
+    />
     <template v-for="(text, id ) in $options.Links">
-      <a
-        href="#"
+      <button
         :key="id"
-        :class="{ 'active': id === active }"
+        v-if="id !== active"
         @click.prevent="$emit('update:active', id)"
-        v-text="text"
-      />
+      >
+        <span v-text="text" />
+        <FontIcon :icon="icon" />
+      </button>
     </template>
   </nav>
 </template>
 
 <script>
+import { faCog, faList } from '@fortawesome/free-solid-svg-icons';
 import { mapActions } from 'vuex';
 import { Action } from '../config/types.json';
 import Add from './Add.vue';
@@ -35,8 +40,20 @@ export default {
       validation: (val) => !!Links[val],
     },
   },
+  computed: {
+    icon() {
+      return {
+        list: faCog,
+        settings: faList,
+      }[this.active];
+    },
+  },
   methods: mapActions({
     add: Action.ADD_ITEM,
   }),
 };
 </script>
+
+<style lang="scss">
+  @import "../style/Menu.scss";
+</style>

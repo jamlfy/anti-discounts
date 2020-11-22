@@ -7,9 +7,9 @@
     <section
       @click="$emit('open', url)"
     >
-      <div>
+      <div class="info">
         <h2 v-text="title" />
-        <p v-text="description"/>
+        <p v-text="lastTime"/>
       </div>
       <h2
         v-if="times.length"
@@ -20,25 +20,28 @@
     </section>
 
     <nav v-if="!load">
-      <div
+      <button
         class="trash"
         @click="$emit('remove', id)">
-        <i name="trash" />
-      </div>
-       <div
-        class="trash"
+        <FontIcon :icon="trash" />
+      </button>
+      <button
+        class="update"
         @click="$emit('update', id)">
-        <i name="trash" />
-      </div>
+        <FontIcon :icon="update" />
+      </button>
     </nav>
 
-    <div v-if="load">
-      <i name="trash" />
+    <div
+      v-if="load"
+      class="loader">
+      <FontIcon class="spinner" :icon="spinner" />
     </div>
   </li>
 </template>
 
 <script>
+import { faRedo, faTrash, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { lastTime, listTime } from '../utils';
 
 export default {
@@ -59,10 +62,6 @@ export default {
       default: '',
     },
     title: {
-      type: String,
-      default: '',
-    },
-    description: {
       type: String,
       default: '',
     },
@@ -98,6 +97,19 @@ export default {
     lastTime() {
       return lastTime({ prices: this.prices });
     },
+    trash() {
+      return faTrash;
+    },
+    update() {
+      return faRedo;
+    },
+    spinner() {
+      return faSpinner;
+    },
   },
 };
 </script>
+
+<style lang="scss">
+  @import "../style/Item.scss";
+</style>

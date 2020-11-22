@@ -1,8 +1,17 @@
 <template>
   <div id="app">
-    <List v-if="isList" />
-    <Setting v-if="isSetting" />
-    <Menu :active.sync="route" />
+    <div class="content">
+      <List
+        v-if="isList"
+      />
+      <Setting
+        v-if="isSetting"
+      />
+    </div>
+    <Menu
+      class="menu"
+      :active.sync="route"
+    />
   </div>
 </template>
 
@@ -34,13 +43,7 @@ export default {
 };
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+<style lang="scss">
+  @import "../style/Reset.scss";
+  @import "../style/App.scss";
 </style>

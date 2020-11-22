@@ -1,5 +1,6 @@
 {
 	"MIL_SEG": 1000,
+	"StorageArea": "sync",
 	"Mutation": {
 		"REMOVE_ITEM": "removeItem",
 		"UPDATE_ITEM": "updateItem",
@@ -14,5 +15,11 @@
 		"REMOVE_ITEM": "removeItem",
 		"ADD_ITEM": "addItem",
 		"OPEN_TAB": "openTab"
-	}
+	},
+	"Proxies" : [
+		"https://cors-anywhere.herokuapp.com/",
+    "https://yacdn.org/proxy/",
+    "https://api.codetabs.com/v1/proxy/?quest=",
+    ""
+	]
 }
