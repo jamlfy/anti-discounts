@@ -99,7 +99,7 @@ export default {
                 .reduce((node, replacer) => {
                   if (typeof node === 'string') {
                     if (Array.isArray(replacer)) {
-                      return node.replace(new RegExp(replacer[0]), replacer[1]);
+                      return node.replace(new RegExp(...replacer[0]), replacer[1]);
                     }
 
                     return node;

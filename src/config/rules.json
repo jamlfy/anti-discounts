@@ -1,9 +1,11 @@
 {
-	"https://www.linio.com.co/p/:id": {
+	"https://www.linio.com.co/p/:slug": {
 		"image": {
 			"[itemprop=image]": [
 				["getAttribute", "content"],
-				["//", "https://"]
+				[
+					["//"], "https://"
+				]
 			]
 		},
 		"title": {
@@ -11,13 +13,26 @@
 			".product-name": ["innerText"]
 		},
 		"price": {
-			".lowest-price > .price-main-md": ["innerText", ["\\$", ""], ["\\.", ""]]
+			".lowest-price > .price-main-md": [
+				"innerText",
+				[
+					["\\$"], ""
+				],
+				[
+					["\\.", "g"], ""
+				]
+			]
 		},
 		"symbol": {
-			".lowest-price > .price-main-md": ["symbol", ["", "COP"]]
+			".lowest-price > .price-main-md": [
+				"symbol",
+				[
+					[""], "COP"
+				]
+			]
 		}
 	},
-	"https://www.falabella.com.co/falabella-co/product/*": {
+	"https://www.falabella.com.co/falabella-co/product/:id/:slug/:id2": {
 		"image": {
 			".next-head[property='og:image']": [
 				["getAttribute", "content"]
@@ -31,14 +46,23 @@
 		},
 		"price": {
 			"[data-variant=PDP_MAIN] > .primary": [
-				"innerText", 
-				["\\$", ""],
-				["\\.", ""],
-				["(Precio final)", ""]
+				"innerText",
+				[
+					["\\$"], ""
+				],
+				[
+					["\\.", "g"], ""
+				],
+				[
+					["(Precio final)"], ""
+				]
 			]
 		},
 		"symbol": {
-			"[data-variant=PDP_MAIN] > .primary": ["symbol", ["", "COP"]]
+			"[data-variant=PDP_MAIN] > .primary": [
+				"symbol",
+				["", "COP"]
+			]
 		}
 	},
 	"https://www.exito.com/:id/p": {
@@ -50,23 +74,64 @@
 		"title": {
 			"[property='og:title']": [
 				["getAttribute", "content"],
-				["| Éxito - Compra Online en Colombia | exito.com", ""]
+				[
+					["| Éxito - Compra Online en Colombia | exito.com"], ""
+				]
 			],
 			".vtex-store-components-3-x-productBrand": ["innerText"]
 		},
 		"price": {
-			"[property='product:price:amount']" : [
+			"[property='product:price:amount']": [
 				["getAttribute", "content"]
 			],
 			".exito-vtex-components-4-x-alliedDiscountPrice": [
-				"innerText", 
-				["\\$", ""],
-				["\\.", ""]
+				"innerText",
+				[
+					["\\$"], ""
+				],
+				[
+					["\\.", "g"], ""
+				]
 			]
 		},
 		"symbol": {
 			"[property='product:price:currency']": [
 				["getAttribute", "content"]
+			]
+		}
+	},
+	"https://www.ktronix.com/:slug/p/:id": {
+		"title": {
+			".product-name__name.module-title": ["innerText"]
+		},
+		"price": {
+			".price-ktronix": [
+				"innerText",
+				[
+					["\\$"], ""
+				],
+				[
+					["\\.", "g"], ""
+				],
+				[
+					["Hoy"], ""
+				]
+			]
+		},
+		"image": {
+			".owl-item.active:first-child .owl-lazy": [
+				["getAttribute", "data-src"],
+				[
+					["/medias"], "https://www.ktronix.com/medias"
+				]
+			]
+		},
+		"symbol": {
+			".price-ktronix": [
+				"symbol",
+				[
+					[""], "COP"
+				]
 			]
 		}
 	}
