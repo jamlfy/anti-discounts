@@ -1,5 +1,5 @@
 {
-	"*.linio.com.co/p/*": {
+	"https://www.linio.com.co/p/:id": {
 		"image": {
 			"[itemprop=image]": [
 				["getAttribute", "content"],
@@ -15,6 +15,59 @@
 		},
 		"symbol": {
 			".lowest-price > .price-main-md": ["symbol", ["", "COP"]]
+		}
+	},
+	"https://www.falabella.com.co/falabella-co/product/*": {
+		"image": {
+			".next-head[property='og:image']": [
+				["getAttribute", "content"]
+			]
+		},
+		"title": {
+			".next-head[property='og:title']": [
+				["getAttribute", "content"]
+			],
+			".product-name": ["innerText"]
+		},
+		"price": {
+			"[data-variant=PDP_MAIN] > .primary": [
+				"innerText", 
+				["\\$", ""],
+				["\\.", ""],
+				["(Precio final)", ""]
+			]
+		},
+		"symbol": {
+			"[data-variant=PDP_MAIN] > .primary": ["symbol", ["", "COP"]]
+		}
+	},
+	"https://www.exito.com/:id/p": {
+		"image": {
+			"[property='og:image']": [
+				["getAttribute", "content"]
+			]
+		},
+		"title": {
+			"[property='og:title']": [
+				["getAttribute", "content"],
+				["| Éxito - Compra Online en Colombia | exito.com", ""]
+			],
+			".vtex-store-components-3-x-productBrand": ["innerText"]
+		},
+		"price": {
+			"[property='product:price:amount']" : [
+				["getAttribute", "content"]
+			],
+			".exito-vtex-components-4-x-alliedDiscountPrice": [
+				"innerText", 
+				["\\$", ""],
+				["\\.", ""]
+			]
+		},
+		"symbol": {
+			"[property='product:price:currency']": [
+				["getAttribute", "content"]
+			]
 		}
 	}
 }
