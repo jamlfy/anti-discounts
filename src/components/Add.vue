@@ -1,6 +1,6 @@
 <template>
   <button
-    @click="click"
+    @click="$emit('is', cleanUrl)"
     :disabled="!isActive">
     <span v-text="'agregar'" />
     <FontIcon :icon="icon" />
@@ -16,18 +16,22 @@ export default {
   name: 'Add',
   data() {
     return {
-      url: 'https://www.linio.com.co/p/samsung-galaxy-a01-core-16gb-rojo-oq6vec',
+      url: '',
     };
   },
   mounted() {
-    // browser.tabs.query({active: true, currentWindow: true})
-    //  .then(([tab]) => this.url = tab.url );
+    this.getUrl();
   },
   computed: {
+    cleanUrl() {
+      const urlObj = new URL(this.url);
+      urlObj.search = '';
+      return urlObj.toString();
+    },
     isActive() {
       return !!this.url
         && findByDomain(this.url)
-        && this.items.every(({ url }) => url !== this.url);
+        && this.items.every(({ url }) => url !== this.cleanUrl);
     },
     icon() {
       return faPlus;
@@ -37,9 +41,10 @@ export default {
     }),
   },
   methods: {
-    click() {
-      this.num += 1;
-      this.$emit('is', this.url);
+    getUrl() {
+      /*eslint-disable */
+      browser.tabs.query({ active: true, currentWindow: true })
+        .then((tabs) => this.url = tabs[0].url);
     },
   },
 };

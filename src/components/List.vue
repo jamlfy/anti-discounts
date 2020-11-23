@@ -1,5 +1,6 @@
 <template>
-  <ul v-if="items && items.length">
+  <ul v-if="items"
+    :class="{ center: !items.length }">
     <Item
       v-for="(item, index) in items"
       :key="index"
@@ -8,6 +9,7 @@
       @remove="remove"
       @update="update"
     />
+    <h2 v-if="!items.length">Agrega un item</h2>
   </ul>
 </template>
 

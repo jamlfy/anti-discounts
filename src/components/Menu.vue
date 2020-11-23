@@ -6,6 +6,7 @@
     />
     <template v-for="(text, id ) in $options.Links">
       <button
+        :class="['nav-button', id]"
         :key="id"
         v-if="id !== active"
         @click.prevent="$emit('update:active', id)"

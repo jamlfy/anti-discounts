@@ -12,6 +12,9 @@
 		},
 		"price": {
 			".lowest-price > .price-main-md": ["innerText", ["\\$", ""], ["\\.", ""]]
+		},
+		"symbol": {
+			".lowest-price > .price-main-md": ["symbol", ["", "COP"]]
 		}
 	}
 }

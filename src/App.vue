@@ -44,6 +44,6 @@ export default {
 </script>
 
 <style lang="scss">
-  @import "../style/Reset.scss";
-  @import "../style/App.scss";
+@import "./style/Reset.scss";
+@import "./style/App.scss";
 </style>

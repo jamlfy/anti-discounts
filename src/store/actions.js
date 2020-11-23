@@ -106,10 +106,10 @@ export default {
                   }
 
                   if (Array.isArray(replacer)) {
-                    return node[replacer[0]](replacer[1]);
+                    return node[replacer[0]](replacer[1]) || '';
                   }
 
-                  return node[replacer];
+                  return node[replacer] || '';
                 }, nodeQuery);
             }
 
@@ -134,11 +134,9 @@ export default {
     commit(Mutation.REMOVE_ITEM, key);
   },
   [Action.ADD_ITEM]: ({ dispatch }, url) => {
-    const urlObj = new URL(url);
-    urlObj.search = '';
     dispatch(Action.UPDATE_ITEM, {
-      url: urlObj.toString(),
-      id: btoa(urlObj.toString()),
+      url,
+      id: btoa(url),
       isNew: true,
     });
   },

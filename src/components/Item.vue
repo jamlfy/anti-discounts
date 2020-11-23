@@ -5,37 +5,42 @@
       @click="$emit('open', url)"
     />
     <section
-      @click="$emit('open', url)"
-    >
+      @click="$emit('open', url)">
       <div class="info">
         <h2 v-text="title" />
-        <p v-text="lastTime"/>
+        <p
+          v-if="lastTime"
+          v-text="date"
+        />
       </div>
       <h2
         v-if="times.length"
-        v-text="price"
-        :class="classTendences"
-        :number="numberTendences"
-      />
+        class="price"
+        :class="classTendences">
+        <span v-text="price" />
+        <span class="porcent" v-text="numberTendences" />
+      </h2>
     </section>
 
-    <nav v-if="!load">
-      <button
-        class="trash"
-        @click="$emit('remove', id)">
-        <FontIcon :icon="trash" />
-      </button>
+    <nav
+      v-if="!load"
+      class="actions">
       <button
         class="update"
         @click="$emit('update', id)">
         <FontIcon :icon="update" />
+      </button>
+      <button
+        class="trash"
+        @click="$emit('remove', id)">
+        <FontIcon :icon="trash" />
       </button>
     </nav>
 
     <div
       v-if="load"
       class="loader">
-      <FontIcon class="spinner" :icon="spinner" />
+      <div class="lds-dual-ring"></div>
     </div>
   </li>
 </template>
@@ -67,7 +72,7 @@ export default {
     },
     symbol: {
       type: String,
-      default: '$',
+      default: 'COP',
     },
     prices: {
       type: Object,
@@ -79,7 +84,10 @@ export default {
       return this.prices[this.times[0]] / this.priceNumber;
     },
     price() {
-      return `${this.symbol} ${this.priceNumber}`;
+      return this.priceNumber.toLocaleString(navigator.language, {
+        style: 'currency',
+        currency: this.symbol,
+      });
     },
     classTendences() {
       return {
@@ -96,6 +104,9 @@ export default {
     },
     lastTime() {
       return lastTime({ prices: this.prices });
+    },
+    date() {
+      return new Date(parseInt(this.lastTime, 10)).toLocaleString(navigator.language);
     },
     trash() {
       return faTrash;
