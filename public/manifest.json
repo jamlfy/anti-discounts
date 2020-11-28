@@ -1,5 +1,5 @@
 {
-  "name": "Beastify",
+  "name": "Anti-Discount",
   "description": "__MSG_extensionDescription__",
   "manifest_version": 2,
   "version": "1.0",
@@ -10,25 +10,33 @@
       "strict_min_version": "56.0a1"
     }
   },
-
   "icons": {
-    "48": "assets/beasts-48.png"
+    "128": "assets/tags-128.png",
+    "96": "assets/tags-96.png",
+    "64": "assets/tags-64.png",
+    "32": "assets/tags-32.png"
   },
-
   "permissions": [
     "activeTab",
     "storage",
     "tabs"
   ],
-
   "browser_action": {
     "default_icon": "assets/beasts-32.png",
     "theme_icons": [{
-        "light": "assets/beasts-32-light.png",
-        "dark": "assets/beasts-32.png",
-        "size": 32
+      "light": "assets/tags-32-light.png",
+      "dark": "assets/tags-32.png",
+      "size": 32
+    }, {
+      "light": "assets/tags-64-light.png",
+      "dark": "assets/tags-64.png",
+      "size": 64
+    }, {
+      "light": "assets/tags-128-light.png",
+      "dark": "assets/tags-128.png",
+      "size": 128
     }],
-    "default_title": "Beastify",
+    "default_title": "Anti-Discount",
     "default_popup": "index.html"
   }
 }
