@@ -11,10 +11,10 @@
     }
   },
   "icons": {
-    "128": "assets/tags-128.png",
-    "96": "assets/tags-96.png",
-    "64": "assets/tags-64.png",
-    "32": "assets/tags-32.png"
+    "128": "assets/tag-128.png",
+    "96": "assets/tag-96.png",
+    "64": "assets/tag-64.png",
+    "32": "assets/tag-32.png"
   },
   "permissions": [
     "activeTab",
@@ -22,18 +22,22 @@
     "tabs"
   ],
   "browser_action": {
-    "default_icon": "assets/beasts-32.png",
+    "default_icon": "assets/tag-32.png",
     "theme_icons": [{
-      "light": "assets/tags-32-light.png",
-      "dark": "assets/tags-32.png",
+      "light": "assets/tag-32-light.png",
+      "dark": "assets/tag-32.png",
       "size": 32
     }, {
-      "light": "assets/tags-64-light.png",
-      "dark": "assets/tags-64.png",
+      "light": "assets/tag-64-light.png",
+      "dark": "assets/tag-64.png",
       "size": 64
     }, {
-      "light": "assets/tags-128-light.png",
-      "dark": "assets/tags-128.png",
+      "light": "assets/tag-96-light.png",
+      "dark": "assets/tag-96.png",
+      "size": 96
+    }, {
+      "light": "assets/tag-128-light.png",
+      "dark": "assets/tag-128.png",
       "size": 128
     }],
     "default_title": "Anti-Discount",
