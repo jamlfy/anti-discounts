@@ -21,6 +21,7 @@ nav {
     margin: 0;
     background: transparent;
     border: 0;
+    cursor: pointer;
 
     &[disabled]{
       opacity: .3;

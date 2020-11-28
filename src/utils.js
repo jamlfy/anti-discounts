@@ -53,18 +53,18 @@ export const creatorNotification = (getMessage = ($) => $, item = {}) => {
   return ({
     type: 'basic',
     image: item.image,
-    title: getMessage('notificationTitle', item.title),
-    message: getMessage('notificationContent', {
+    title: getMessage('notificationTitle', [item.title]),
+    message: getMessage('notificationContent', [
       vendorName,
-      original: item.prices[listTimes[0]].toLocaleString(navigator.language, {
+      item.prices[listTimes[0]].toLocaleString(navigator.language, {
         style: 'currency',
         currency: item.symbol,
       }),
-      now: item.prices[listTimes[listTimes.length - 1]].toLocaleString(navigator.language, {
+      item.prices[listTimes[listTimes.length - 1]].toLocaleString(navigator.language, {
         style: 'currency',
         currency: item.symbol,
       }),
-    }),
+    ]),
   });
 };
 

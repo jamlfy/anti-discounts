@@ -2,7 +2,7 @@
   <button
     @click="$emit('is', cleanUrl)"
     :disabled="!isActive">
-    <span v-text="'agregar'" />
+    <span v-text="textToAdd" />
     <FontIcon :icon="icon" />
   </button>
 </template>
@@ -34,6 +34,9 @@ export default {
     tabs.onActivated.removeListener(this.getUrl);
   },
   computed: {
+    textToAdd() {
+      return this.$translate('textToAdd');
+    },
     cleanUrl() {
       const urlObj = new URL(this.url);
       urlObj.search = '';

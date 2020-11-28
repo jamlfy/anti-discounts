@@ -1,18 +1,42 @@
 {
-	 "extensionName": {
-    "message": "Menu item with access key",
-    "description": "Name of the extension."
-  },
+	"extensionDescription": {
+		"message": "Menu item with access key",
+		"description": "Name of the extension."
+	},
 	"textEmpty": {
 		"message": "Debes agregar un elemento",
 		"description": "Name of the extension."
 	},
 	"notificationTitle": {
-		"message": "Alerta de precio: $title$",
-		"description": "Name of the extension."
+		"message": "Alerta de precio: $TITLE$",
+		"description": "Name of the extension.",
+		"placeholders": {
+			"title": {
+				"content": "$1",
+				"example": "Articulo"
+			}
+		}
 	},
 	"notificationContent": {
-		"message": "$vendorName$ · Original $original$, ahora esta en $now$",
+		"message": "$VENDORNAME$ · Original $ORIGINAL$, ahora esta en $NOW$",
+		"description": "Name of the extension.",
+		"placeholders": {
+			"vendorname": {
+				"content": "$1",
+				"example": "WebSite"
+			},
+			"original": {
+				"content": "$2",
+				"example": "0.00"
+			},
+			"now": {
+				"content": "$3",
+				"example": "0.00"
+			}
+		}
+	},
+	"textToAdd": {
+		"message": "Agregar",
 		"description": "Name of the extension."
 	}
 }

@@ -7,8 +7,8 @@ module.exports = {
       return [{
         ...options, // these are the env variables from your .env file, if any arr defined
         VERSION: JSON.stringify(package.version),
-        EXTENSION : `( browser || chrome )`,
-        IS_CHROME: `navigator.appCodeName !== 'Mozilla'`
+        EXTENSION : `(navigator.vendor === 'Google Inc.' ? chrome : browser )`,
+        IS_CHROME: `navigator.vendor === 'Google Inc.'`
       }]
     })
   }

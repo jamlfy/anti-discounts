@@ -20,6 +20,18 @@
   }
 }
 
+@media (prefers-color-scheme: light) {
+  :root {
+    --main-bg-color: #fff;
+    --main-color: #323234;
+    --main-m-color: #c1c;
+
+    --main-rbg: 250, 250, 250;
+    --main-light: rgba(var(--main-rbg), 0.1); 
+    --main-dark: rgba(var(--main-rbg), 0.7);
+  }
+}
+
 body, html {
   background: var(--main-bg-color);
   color: var(--main-color);

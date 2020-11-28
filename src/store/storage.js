@@ -8,12 +8,16 @@ export default {
     name: 'storage',
   },
   getItem(key) {
-    // eslint-disable-next-line no-undef
-    if (IS_CHROME) {
-      return new Promise((resolve) => Storage.get(key, resolve));
-    }
+    const getItem = () => {
+      // eslint-disable-next-line no-undef
+      if (IS_CHROME) {
+        return new Promise((resolve) => Storage.get(key, resolve));
+      }
 
-    return Storage.get(key).then((save) => save[key]);
+      return Storage.get(key);
+    };
+
+    return getItem().then((save) => save[key]);
   },
   setItem(key, data) {
     const toSave = {
@@ -57,6 +61,6 @@ export default {
   },
   key(keyIndex) {
     return this.getAll()
-      .then((obj) => obj[Object.keys(obj)[keyIndex]]);
+      .then((obj = {}) => obj[Object.keys(obj)[keyIndex]]);
   },
 };

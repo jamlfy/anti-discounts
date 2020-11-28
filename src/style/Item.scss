@@ -20,6 +20,7 @@ ul{
     border-color: var(--main-light);
     min-height: 65px;
     align-items: center;
+    cursor: pointer;
 
     &:hover {
       background-color: var(--main-light);
