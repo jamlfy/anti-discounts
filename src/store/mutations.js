@@ -17,14 +17,21 @@ export default {
     }
   },
   [Mutation.NEXT_RUN]: (state) => {
-    /*eslint-disable */
-    state.lastRun = Date.now() - (state.settings.nextDate * MIL_SEG);
+    // eslint-disable-next-line no-param-reassign
+    state = {
+      ...state,
+      // eslint-disable-next-line no-unused-vars
+      lastRun: Date.now() - (state.settings.nextDate * MIL_SEG),
+    };
   },
   [Mutation.UPDATE_SETTING]: (state, settings = {}) => {
-    /*eslint-disable */
-    state.settings = {
-      ...state.settings,
-      ...settings,
+    // eslint-disable-next-line no-param-reassign
+    state = {
+      ...state,
+      settings: {
+        ...state.settings,
+        ...settings,
+      },
     };
   },
 };

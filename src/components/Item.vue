@@ -2,10 +2,10 @@
   <li :class="{ error: error }">
     <img
       :src="image"
-      @click="$emit('open', url)"
+      @click="$emit('open', id)"
     />
     <section
-      @click="$emit('open', url)">
+      @click="$emit('open', id)">
       <div class="info">
         <h2 v-text="title" />
         <p
@@ -18,7 +18,9 @@
         class="price"
         :class="classTendences">
         <span v-text="price" />
-        <span class="porcent" v-text="numberTendences" />
+        <span class="porcent"
+          v-text="numberTendences"
+        />
       </h2>
     </section>
 
@@ -62,10 +64,6 @@ export default {
       type: String,
       default: '',
     },
-    url: {
-      type: String,
-      default: '',
-    },
     title: {
       type: String,
       default: '',
@@ -81,7 +79,7 @@ export default {
   },
   computed: {
     numberTendences() {
-      return this.prices[this.times[0]] / this.priceNumber;
+      return (this.prices[this.times[0]] / this.priceNumber) - 1;
     },
     price() {
       return this.priceNumber.toLocaleString(navigator.language, {

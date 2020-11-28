@@ -1,6 +1,6 @@
 {
 	"MIL_SEG": 1000,
-	"StorageArea": "sync",
+	"StorageArea": "local",
 	"Mutation": {
 		"REMOVE_ITEM": "removeItem",
 		"UPDATE_ITEM": "updateItem",
@@ -13,8 +13,7 @@
 		"UPDATE_BY_ID": "updateById",
 		"GET_DATA": "getData",
 		"REMOVE_ITEM": "removeItem",
-		"ADD_ITEM": "addItem",
-		"OPEN_TAB": "openTab"
+		"ADD_ITEM": "addItem"
 	},
 	"Proxies" : [
 		"https://cors-anywhere.herokuapp.com/",

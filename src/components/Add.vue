@@ -12,6 +12,13 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { mapState } from 'vuex';
 import { findByDomain } from '../utils';
 
+const Query = {
+  active: true,
+  currentWindow: true,
+};
+// eslint-disable-next-line no-undef
+const { tabs } = EXTENSION;
+
 export default {
   name: 'Add',
   data() {
@@ -21,6 +28,10 @@ export default {
   },
   mounted() {
     this.getUrl();
+    tabs.onActivated.addListener(this.getUrl);
+  },
+  beforeDestroy() {
+    tabs.onActivated.removeListener(this.getUrl);
   },
   computed: {
     cleanUrl() {
@@ -30,8 +41,8 @@ export default {
     },
     isActive() {
       return !!this.url
-        && findByDomain(this.url)
-        && this.items.every(({ url }) => url !== this.cleanUrl);
+        && !!findByDomain(this.cleanUrl)
+        && this.items.every(({ id }) => id !== btoa(this.cleanUrl));
     },
     icon() {
       return faPlus;
@@ -41,11 +52,23 @@ export default {
     }),
   },
   methods: {
-    getUrl() {
-      /*eslint-disable */
-      browser.tabs.query({ active: true, currentWindow: true })
-        .then((tabs) => this.url = tabs[0].url);
+    query() {
+      // eslint-disable-next-line no-undef
+      if (IS_CHROME) {
+        return new Promise((resolve) => tabs.query(Query, resolve));
+      }
+
+      return tabs.query(Query);
     },
+    async getUrl() {
+      try {
+        const [tab] = await this.query();
+        this.url = tab.url;
+      } catch (e) {
+        this.url = '';
+      }
+    },
+
   },
 };
 </script>

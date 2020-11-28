@@ -1,0 +1,18 @@
+{
+	 "extensionName": {
+    "message": "Menu item with access key",
+    "description": "Name of the extension."
+  },
+	"textEmpty": {
+		"message": "Debes agregar un elemento",
+		"description": "Name of the extension."
+	},
+	"notificationTitle": {
+		"message": "Alerta de precio: $title$",
+		"description": "Name of the extension."
+	},
+	"notificationContent": {
+		"message": "$vendorName$ · Original $original$, ahora esta en $now$",
+		"description": "Name of the extension."
+	}
+}

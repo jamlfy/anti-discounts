@@ -9,7 +9,10 @@
       @remove="remove"
       @update="update"
     />
-    <h2 v-if="!items.length">Agrega un item</h2>
+    <h2
+      v-if="!items.length"
+      v-text="textEmpty"
+    />
   </ul>
 </template>
 
@@ -18,19 +21,32 @@ import { mapActions, mapState } from 'vuex';
 import { Action } from '../config/types.json';
 
 import Item from './Item.vue';
+// eslint-disable-next-line no-undef
+const { tabs } = EXTENSION;
 
 export default {
   name: 'List',
   components: {
     Item,
   },
-  computed: mapState({
-    items: (state) => state.items,
-  }),
-  methods: mapActions({
-    update: Action.UPDATE_BY_ID,
-    remove: Action.REMOVE_ITEM,
-    open: Action.OPEN_TAB,
-  }),
+  computed: {
+    ...mapState({
+      items: (state) => state.items,
+    }),
+
+    textEmpty() {
+      return this.$translate('textEmpty');
+    },
+  },
+  methods: {
+    ...mapActions({
+      update: Action.UPDATE_BY_ID,
+      remove: Action.REMOVE_ITEM,
+      open: Action.OPEN_TAB,
+    }),
+    open(id) {
+      tabs.create({ url: atob(id) });
+    },
+  },
 };
 </script>

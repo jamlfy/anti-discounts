@@ -1,8 +1,9 @@
 {
 	"items": [],
 	"settings": {
-		"nextDate": 43200
+		"nextDate": 43200,
+		"notification": 2
 	},
 	"block": false,
-	"lastRun": null
+	"lastRun": null	
 }

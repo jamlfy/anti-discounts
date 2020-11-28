@@ -1,7 +1,12 @@
 import {
-  findByDomain, sort, filter, lastTime, finder, creatorError,
+  findByDomain, sort, filter, lastTime, finder, creatorError, creatorNotification, showNotification,
 } from '../utils';
 import { Mutation, Action, Proxies } from '../config/types.json';
+
+const {
+  i18n, notifications,
+// eslint-disable-next-line no-undef
+} = EXTENSION;
 
 export default {
   [Action.RUNNER]: ({ dispatch, commit, state }) => {
@@ -18,39 +23,42 @@ export default {
       dispatch(Action.RUNNER);
     }, state.settings.nextDate);
   },
-  [Action.UPDATE_ITEM]: async ({ commit, dispatch }, { prices = {}, url, ...item }) => {
+  [Action.UPDATE_ITEM]: async ({ commit, dispatch, state }, { prices = {}, id, ...item }) => {
     let remove = false;
     let newItem = {
       ...item,
       prices,
-      url,
+      id,
       error: false,
       load: true,
     };
 
     try {
       commit(Mutation.UPDATE_ITEM, newItem);
-      const { now, price, ...data } = await dispatch(Action.GET_DATA, { url });
-      const lastThatTime = lastTime({ prices });
-
-      newItem.prices = {
-        ...prices,
-        [now]: parseInt(price, 10),
-      };
-
-      if (lastThatTime && newItem.prices[lastThatTime] && newItem.prices[lastThatTime] === price) {
-        delete newItem.prices[lastThatTime];
-      }
+      const { now, price, ...data } = await dispatch(Action.GET_DATA, { url: atob(id) });
+      const lastPrice = lastTime({ prices });
+      const newPrice = parseInt(price, 10);
 
       newItem = {
-        ...newItem,
+        ...item,
         ...data,
-        prices: newItem.prices,
+        id,
+        prices: {
+          ...prices,
+          [now]: newPrice,
+        },
         load: false,
         error: false,
-        isNew: undefined,
+        isNew: false,
       };
+
+      if (lastPrice && prices[lastPrice] && prices[lastPrice] === newPrice) {
+        delete newItem.prices[lastPrice];
+      } else if (showNotification[state.settings.notification](item, newPrice)) {
+        notifications.create(newItem.id, creatorNotification(i18n.getMessage, newItem));
+      }
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error(Action.UPDATE_ITEM, e);
       newItem.load = false;
       newItem.error = true;
@@ -65,8 +73,8 @@ export default {
 
     return newItem.error;
   },
-  [Action.UPDATE_BY_ID]: ({ dispatch, state }, key) => {
-    const item = state.items.find(finder(key));
+  [Action.UPDATE_BY_ID]: ({ dispatch, state: { items = [] } }, key) => {
+    const item = items.find(finder(key));
     if (item) {
       return dispatch(Action.UPDATE_ITEM, item);
     }
@@ -119,6 +127,7 @@ export default {
           now: Date.now(),
         });
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error(Action.GET_DATA, e);
       if (index <= 0) {
         throw e;
@@ -135,12 +144,8 @@ export default {
   },
   [Action.ADD_ITEM]: ({ dispatch }, url) => {
     dispatch(Action.UPDATE_ITEM, {
-      url,
       id: btoa(url),
       isNew: true,
     });
-  },
-  [Action.OPEN_TAB]: (context, url) => {
-    console.log('context', context, url);
   },
 };
