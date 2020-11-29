@@ -1,7 +1,8 @@
 {
   "name": "anti-discount",
   "version": "0.1.0",
-  "private": true,
+  "author": "AlejoNext <alejonext@gmail.com>",
+  "homepage": "https://github.com/alejonext/anti-discounts",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
