@@ -1,0 +1,19 @@
+name: Version Tags
+
+on:
+  release:
+    types: [published, edited]
+
+jobs:
+  actions-tagger:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2.3.4
+
+      - name: 
+        uses: Actions-R-Us/actions-tagger@v2.0.1
+        with:
+          publish_latest_tag: true
+        env:
+          GITHUB_TOKEN: "${{secrets.GITHUB_TOKEN}}"
